@@ -1,0 +1,28 @@
+import streamlit as st
+import random
+
+st.set_page_config(page_title="Colour Guessing Game")
+
+st.title("🎨 Colour Guessing Game")
+st.write("Try to guess the correct colour from the list!")
+
+# List of possible colours
+colours = ["red", "blue", "green", "yellow", "orange", "purple", "pink"]
+
+# Pick or store the secret colour
+if "secret" not in st.session_state:
+    st.session_state.secret = random.choice(colours)
+
+# Dropdown for guessing
+guess = st.selectbox("Choose your guess:", colours)
+
+# Check the guess
+if st.button("Submit Guess"):
+    if guess == st.session_state.secret:
+        st.success(f"🎉 Correct! The colour was **{st.session_state.secret}**.")
+        st.session_state.secret = random.choice(colours)  # start new round
+    else:
+        st.error("❌ Wrong guess! Try again.")
+
+st.write("---")
+st.caption("Reload or keep guessing until you're right!")
